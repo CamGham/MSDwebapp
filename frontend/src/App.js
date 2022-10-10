@@ -10,15 +10,16 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const runCoco = async () => {
-    const model = await cocoSsd.load();
+  // const runCoco = async () => {
+  //   const model = await cocoSsd.load();
 
-    setInterval(() => {
-      detect(model);
-    }, 20);
-  };
+  //   setInterval(() => {
+  //     detect(model);
+  //   }, 20);
+  // };
 
-  const runPose = async () => {
+  const runModels = async () => {
+    //create detecotr for pose detection
     const detectorConfig = {
       modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
     };
@@ -26,9 +27,11 @@ function App() {
       poseDetection.SupportedModels.MoveNet,
       detectorConfig
     );
-    
+    //load coco for object detection
+    const model = await cocoSsd.load();
     setInterval(() => {
       identify(detector);
+      detect(model);
     }, 10);
   };
 
@@ -37,8 +40,7 @@ function App() {
       await tf.ready();
       tf.getBackend();
     })();
-    // runCoco();
-    runPose();
+    runModels();
   }, []);
 
   const drawRect = (detections, ctx) => {
