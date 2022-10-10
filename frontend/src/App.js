@@ -2,14 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs";
-// import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import "@tensorflow/tfjs-backend-webgl";
-
-// import * as params from './params';
-// import {isMobile} from './util';
-
 import { drawKeypoints, drawSkeleton } from "./utilities";
+
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -17,9 +13,9 @@ function App() {
   const runCoco = async () => {
     const model = await cocoSsd.load();
 
-    // setInterval(() => {
-    //   detect(model);
-    // }, 10);
+    setInterval(() => {
+      detect(model);
+    }, 20);
   };
 
   const runPose = async () => {
@@ -41,7 +37,7 @@ function App() {
       await tf.ready();
       tf.getBackend();
     })();
-    runCoco();
+    // runCoco();
     runPose();
   }, []);
 
@@ -63,76 +59,55 @@ function App() {
   };
 
   const identify = async (detector) => {
-    // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
-      // Get Video Properties
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
-      // // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
-
-      // // Set canvas height and width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      // 4. TODO - Make Detections
       const poses = await detector.estimatePoses(video);
-      console.log(poses);
-      //Draw mesh
-      const ctx = canvasRef.current.getContext("2d");
 
-      // drawPose(poses, ctx);
       drawCanvas(poses, video, videoWidth, videoHeight, canvasRef);
     }
   };
-  // const drawPose = (poses, ctx) => {
-  //   for (const pose of poses) {
-  //     drawResult(pose, ctx);
-  //   }
-  // };
+
 
   const drawCanvas = (pose, video, videoWidth, videoHeight, canvas) => {
     const ctx = canvas.current.getContext("2d");
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
-    // console.log(pose);
-    // console.log(pose[0].keypoints);
-    drawKeypoints(pose, 0.6, ctx);
-    drawSkeleton(pose, 0.7, ctx);
+    drawKeypoints(pose, 0.3, ctx);
+    drawSkeleton(pose, 0.3, ctx);
   };
 
 
   const detect = async (model) => {
-    // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
-      // Get Video Properties
+
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
-      // // Set video width
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      // // Set canvas height and width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      // 4. TODO - Make Detections
+
       const obj = await model.detect(video);
-      // console.log(obj);
-      //Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
       drawRect(obj, ctx);
