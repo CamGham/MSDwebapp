@@ -32,7 +32,7 @@ function App() {
     setInterval(() => {
       identify(detector);
       detect(model);
-    }, 10);
+    }, 100);
   };
 
   useEffect(() => {

@@ -56,6 +56,10 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
     );
   }
 
+  //angle between lShoulder and lElbow
+  calcAngle(toTuple(rShoulder.y, rShoulder.x),toTuple(lShoulder.y, lShoulder.x),toTuple(lShoulder.y, lShoulder.x),toTuple(lElbow.y, lElbow.x), ctx, "red")
+  
+
   //left arm top
   if (lShoulder.score > minConfidence && lElbow.score > minConfidence) {
     drawSegment(
@@ -66,6 +70,11 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
       ctx
     );
   }
+
+  //angle between lElbow and lWrist
+  calcAngle(toTuple(lShoulder.y, lShoulder.x),toTuple(lElbow.y, lElbow.x),toTuple(lElbow.y, lElbow.x),toTuple(lWrist.y, lWrist.x), ctx, color)
+ 
+
   //left arm bottom
   if (lElbow.score > minConfidence && lWrist.score > minConfidence) {
     drawSegment(
@@ -76,6 +85,10 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
       ctx
     );
   }
+
+  //angle between rightShoulder and rightElbow
+  calcAngle(toTuple(lShoulder.y, lShoulder.x),toTuple(rShoulder.y, rShoulder.x),toTuple(rShoulder.y, rShoulder.x),toTuple(rElbow.y, rElbow.x), ctx, "red")
+  
   //right arm top
   if (rShoulder.score > minConfidence && rElbow.score > minConfidence) {
     drawSegment(
@@ -86,6 +99,11 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
       ctx
     );
   }
+
+  //angle between rElbow and rWrist
+  calcAngle(toTuple(rShoulder.y, rShoulder.x),toTuple(rElbow.y, rElbow.x),toTuple(rElbow.y, rElbow.x),toTuple(rWrist.y, rWrist.x), ctx, color)
+ 
+
   //right arm bottom
   if (rElbow.score > minConfidence && rWrist.score > minConfidence) {
     drawSegment(
@@ -185,3 +203,19 @@ export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
 }
+
+function calcAngle([ay, ax], [by, bx], [cy, cx], [dy, dx], ctx, color) {
+  const slope1 = (ay - by) / (ax - bx);
+  const slope2 = (cy - dy) / (cx - dx);
+  console.log(slope1);
+  console.log(slope2);
+  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
+  console.log(angle* 180 / Math.PI);
+  
+const text = angle* 180 / Math.PI;
+ctx.beginPath();
+      ctx.fillText(text, bx, by);
+      ctx.stroke();
+}
+
+
