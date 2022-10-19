@@ -1,12 +1,41 @@
-.landingCont{
-    /* background-color: red; */
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.landingCont {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
 }
-.buttonCont{
-    justify-content: center;
-    align-items: center;
+.logoCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}
+.buttonCont {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+}
+.button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.logo {
+  width: 20%;
+  height: 20%;
+}
+@media screen and (max-width: 600px) {
+  .buttonCont {
+    margin-top: 10%;
+  }
+  .logoCont {
+    margin-top: 20%;
+  }
+  .logo {
+    width: 40%;
+    height: 40%;
+  }
 }

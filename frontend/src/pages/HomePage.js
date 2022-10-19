@@ -1,9 +1,15 @@
-import React from 'react'
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import React, { useState } from "react";
+import BottomNav from "../components/BottomNav";
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
-}
+  let current = 1;
 
-export default HomePage
+  return (
+    <div>
+      <BottomNav current={current}/>
+    </div>
+  );
+};
+
+export default HomePage;

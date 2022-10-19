@@ -4,9 +4,12 @@ import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import "@tensorflow/tfjs-backend-webgl";
-import { drawKeypoints, drawSkeleton } from "./utilities";
+import { drawKeypoints, drawSkeleton } from "../utilities";
+import BottomNav from "../components/BottomNav";
+import "./LiveCamera.css";
 
 const LiveCamera = () => {
+  let current = 2;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -81,7 +84,6 @@ const LiveCamera = () => {
     }
   };
 
-
   const drawCanvas = (pose, video, videoWidth, videoHeight, canvas) => {
     const ctx = canvas.current.getContext("2d");
     canvas.current.width = videoWidth;
@@ -90,14 +92,12 @@ const LiveCamera = () => {
     drawSkeleton(pose, 0.3, ctx);
   };
 
-
   const detect = async (model) => {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
-
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
@@ -108,7 +108,6 @@ const LiveCamera = () => {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-
       const obj = await model.detect(video);
       const ctx = canvasRef.current.getContext("2d");
 
@@ -116,12 +115,9 @@ const LiveCamera = () => {
     }
   };
 
-
-  
-
-  return (
-    <div className="App">
-      <header className="App-header">
+  return (  
+    <div>
+      <div className="camCont">
         <Webcam
           ref={webcamRef}
           muted={true}
@@ -151,9 +147,12 @@ const LiveCamera = () => {
           }}
           ref={canvasRef}
         />
-      </header>
+      </div>
+      <div className="navCont">
+        <BottomNav current={current} />
+      </div>
     </div>
   );
-}
+};
 
 export default LiveCamera;
