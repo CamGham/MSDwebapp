@@ -1,0 +1,15 @@
+.camCont {
+  display: flex;
+  flex-direction: row;
+}
+.navCont {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 500px;
+  left: 500px;
+  /* zindex: 10; */
+  z-index: 10;
+
+  /* top: 400px; */
+}
