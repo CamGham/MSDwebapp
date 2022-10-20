@@ -134,6 +134,10 @@ const LiveCamera = () => {
 
   return (
     <div>
+      <div className="navCont">
+        <BottomNav current={current} />
+        <AngleTable intAngle={intAngle} extAngle={extAngle}/>
+      </div>
       <div className="camCont">
         <Webcam
           ref={webcamRef}
@@ -146,8 +150,8 @@ const LiveCamera = () => {
             right: 0,
             textAlign: "center",
             zIndex: 9,
-            width: 640,
-            height: 480,
+            width: width,
+            height: height,
           }}
         />
         <canvas
@@ -159,16 +163,13 @@ const LiveCamera = () => {
             right: 0,
             textAlign: "center",
             zIndex: 10,
-            width: 640,
-            height: 480,
+            width: width,
+            height: height,
           }}
           ref={canvasRef}
         />
       </div>
-      <div className="navCont">
-        <BottomNav current={current} />
-        <AngleTable intAngle={intAngle} extAngle={extAngle}/>
-      </div>
+      
       
     </div>
   );
