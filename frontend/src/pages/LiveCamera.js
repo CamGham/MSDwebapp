@@ -133,43 +133,44 @@ const LiveCamera = () => {
   };
 
   return (
-    <div>
-      <div className="navCont">
+    <div className="liveCont">
+      <div>
         <BottomNav current={current} />
-        <AngleTable intAngle={intAngle} extAngle={extAngle}/>
       </div>
       <div className="camCont">
         <Webcam
           ref={webcamRef}
           muted={true}
           style={{
-            position: "absolute",
+            // position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
             zIndex: 9,
-            width: width,
-            height: height,
+            // width: width,
+            // height: height,
           }}
         />
         <canvas
           style={{
-            position: "absolute",
+            // position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
             zIndex: 10,
-            width: width,
-            height: height,
+            // width: width,
+            // height: height,
           }}
           ref={canvasRef}
         />
       </div>
-      
+      <div className="angleCont">
+      <AngleTable intAngle={intAngle} extAngle={extAngle}/>
+      </div>
       
     </div>
   );
