@@ -1,7 +1,7 @@
 .liveCont div {
   /* background-color: red; */
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
 }
 .camCont {
   /* background-color: blue; */
@@ -26,4 +26,6 @@
   /* z-index: 10; */
 
   /* top: 400px; */
+  display: flex;
+  justify-content: center;
 }

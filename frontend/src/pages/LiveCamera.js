@@ -20,6 +20,7 @@ const LiveCamera = () => {
   const [extAngle, setExtAngle] = useState(0);
 
   const { width, height } = useWindowDimensions();
+  const [modelLoad, setModelLoad] = useState(false);
   // const screenOrientation = useScreenOrientation();
   // const { orientation, setOrientation } = useState(true);
   // if (width > height) {
@@ -49,7 +50,7 @@ const LiveCamera = () => {
     setInterval(() => {
       identify(detector);
       detect(model);
-    }, 100);
+    }, 10);
   };
 
   useEffect(() => {

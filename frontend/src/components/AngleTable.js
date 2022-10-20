@@ -1,14 +1,13 @@
 import React from 'react'
+import AngleComponent from './AngleComponent'
+import "./AngleTable.css"
 
 const AngleTable = (props) => {
   return (
-    <div className='container'>
-        <div className='aiaCont'>
-            Interior Angle: {props.intAngle}
-        </div>
-        <div className='aeaCont'>
-        Exterior Angle: {props.extAngle}
-        </div>
+    <div className='table'>
+        <AngleComponent angle={props.intAngle} name={"Arm Int"}/>
+        <AngleComponent angle={props.extAngle} name={"Arm Ext"}/>
+        
     </div>
   )
 }
