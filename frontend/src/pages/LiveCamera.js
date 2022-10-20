@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
+import {Camera} from "react-camera-pro";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs";
 import * as poseDetection from "@tensorflow-models/pose-detection";
@@ -135,6 +136,7 @@ const LiveCamera = () => {
   return (
     <div>
       <div className="camCont">
+{/* <Camera ref={webcamRef} aspectRatio={16/9}/> */}
         <Webcam
           ref={webcamRef}
           muted={true}

@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@mediapipe/pose": "^0.5.1635988162",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.9",
     "@tensorflow-models/coco-ssd": "^2.2.2",
@@ -19,11 +20,13 @@
     "firebase": "^9.12.1",
     "formik": "^2.2.9",
     "react": "^18.2.0",
+    "react-camera-pro": "^1.2.1",
     "react-dom": "^18.2.0",
     "react-hook-screen-orientation": "^1.0.4",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "react-webcam": "^7.0.1",
+    "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
