@@ -8,7 +8,7 @@ import { drawKeypoints, drawSkeleton, exteriorAngle, interiorAngle } from "../ut
 import BottomNav from "../components/BottomNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
-import useScreenOrientation from 'react-hook-screen-orientation';
+// import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 
 const LiveCamera = () => {
@@ -20,7 +20,7 @@ const LiveCamera = () => {
   const [extAngle, setExtAngle] = useState(0);
 
   const { width, height } = useWindowDimensions();
-  const screenOrientation = useScreenOrientation()
+  // const screenOrientation = useScreenOrientation();
   // const { orientation, setOrientation } = useState(true);
   // if (width > height) {
   //   setOrientation(false);
@@ -28,13 +28,13 @@ const LiveCamera = () => {
   //   setOrientation(true);
   // }
 
-const setCamera = () =>{
-  if(screenOrientation === 'portrait-primary'){
-    console.log("portrait: " + width + " " + height);
-  }else{
-    console.log("landscape: " + width + " " + height);
-  }
-}
+// const setCamera = () =>{
+//   if(screenOrientation === 'portrait-primary'){
+//     console.log("portrait: " + width + " " + height);
+//   }else{
+//     console.log("landscape: " + width + " " + height);
+//   }
+// }
   const runModels = async () => {
     //create detecotr for pose detection
     const detectorConfig = {
@@ -58,7 +58,7 @@ const setCamera = () =>{
       tf.getBackend();
     })();
     runModels();
-    setCamera();
+    // setCamera();
   }, []);
 
   const drawRect = (detections, ctx) => {
@@ -146,7 +146,7 @@ const setCamera = () =>{
             right: 0,
             textAlign: "center",
             zIndex: 9,
-            width: 600,
+            width: 640,
             height: 480,
           }}
         />
@@ -159,7 +159,7 @@ const setCamera = () =>{
             right: 0,
             textAlign: "center",
             zIndex: 10,
-            width: 600,
+            width: 640,
             height: 480,
           }}
           ref={canvasRef}
