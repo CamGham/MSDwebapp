@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, getDoc, doc } from "firebase/firestore";
+import "./LoginForm.css";
 
 const RegisterForm = (props) => {
   const auth = props.auth;
@@ -75,47 +76,59 @@ const RegisterForm = (props) => {
   //   })
 
   return (
-    <form onSubmit={formik.handleSubmit} className="loginForm">
-      <div className="fieldCont">
-        <TextField
-          id="name"
-          variant="outlined"
-          label="Name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.name}
-        />
-        <TextField
-          id="email"
-          variant="outlined"
-          label="Email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-        />
-        <TextField
-          id="password"
-          variant="outlined"
-          type="password"
-          label="Password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-        />
-        <TextField
-          id="confpassword"
-          variant="outlined"
-          type="password"
-          label="Confirm Password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confpassword}
-        />
-        <Button id="register" type="submit" variant="contained">
-          Register
-        </Button>
-      </div>
-    </form>
+    <div>
+      <form onSubmit={formik.handleSubmit} className="loginForm">
+        <div className="fieldCont">
+          <div className="compCont">
+            <TextField
+              id="name"
+              variant="outlined"
+              label="Name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+            />
+          </div>
+          <div className="compCont">
+            <TextField
+              id="email"
+              variant="outlined"
+              label="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+            />
+          </div>
+          <div className="compCont">
+            <TextField
+              id="password"
+              variant="outlined"
+              type="password"
+              label="Password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+            />
+          </div>
+          <div className="compCont">
+            <TextField
+              id="confpassword"
+              variant="outlined"
+              type="password"
+              label="Confirm Password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.confpassword}
+            />
+          </div>
+          <div className="compCont">
+            <Button id="register" type="submit" variant="contained">
+              Register
+            </Button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 

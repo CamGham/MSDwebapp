@@ -4,23 +4,37 @@ import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import "@tensorflow/tfjs-backend-webgl";
-import { drawKeypoints, drawSkeleton } from "../utilities";
+import { drawKeypoints, drawSkeleton, exteriorAngle, interiorAngle } from "../utilities";
 import BottomNav from "../components/BottomNav";
 import "./LiveCamera.css";
+import useWindowDimensions from "../components/useWindowDimensions";
+// import useScreenOrientation from 'react-hook-screen-orientation';
+import AngleTable from "../components/AngleTable";
 
 const LiveCamera = () => {
   let current = 2;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // const runCoco = async () => {
-  //   const model = await cocoSsd.load();
+  const [intAngle, setIntAngle] = useState(0);
+  const [extAngle, setExtAngle] = useState(0);
 
-  //   setInterval(() => {
-  //     detect(model);
-  //   }, 20);
-  // };
+  const { width, height } = useWindowDimensions();
+  // const screenOrientation = useScreenOrientation();
+  // const { orientation, setOrientation } = useState(true);
+  // if (width > height) {
+  //   setOrientation(false);
+  // } else {
+  //   setOrientation(true);
+  // }
 
+// const setCamera = () =>{
+//   if(screenOrientation === 'portrait-primary'){
+//     console.log("portrait: " + width + " " + height);
+//   }else{
+//     console.log("landscape: " + width + " " + height);
+//   }
+// }
   const runModels = async () => {
     //create detecotr for pose detection
     const detectorConfig = {
@@ -44,6 +58,7 @@ const LiveCamera = () => {
       tf.getBackend();
     })();
     runModels();
+    // setCamera();
   }, []);
 
   const drawRect = (detections, ctx) => {
@@ -80,16 +95,18 @@ const LiveCamera = () => {
 
       const poses = await detector.estimatePoses(video);
 
-      drawCanvas(poses, video, videoWidth, videoHeight, canvasRef);
+      drawCanvas(poses, video, videoWidth, videoHeight, canvasRef, setIntAngle, setExtAngle);
     }
   };
 
-  const drawCanvas = (pose, video, videoWidth, videoHeight, canvas) => {
+  const drawCanvas = (pose, video, videoWidth, videoHeight, canvas, setIntAngle) => {
     const ctx = canvas.current.getContext("2d");
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
     drawKeypoints(pose, 0.3, ctx);
     drawSkeleton(pose, 0.3, ctx);
+    interiorAngle(pose, setIntAngle);
+    exteriorAngle(pose, setExtAngle);
   };
 
   const detect = async (model) => {
@@ -115,7 +132,7 @@ const LiveCamera = () => {
     }
   };
 
-  return (  
+  return (
     <div>
       <div className="camCont">
         <Webcam
@@ -150,7 +167,9 @@ const LiveCamera = () => {
       </div>
       <div className="navCont">
         <BottomNav current={current} />
+        <AngleTable intAngle={intAngle} extAngle={extAngle}/>
       </div>
+      
     </div>
   );
 };

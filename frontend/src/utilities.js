@@ -9,7 +9,7 @@ function toTuple(y, x) {
 }
 
 /* Draw point */
-export function drawPoint(ctx, y, x, r, color) {
+ function drawPoint(ctx, y, x, r, color) {
   ctx.beginPath();
   ctx.arc(x, y, r, 0, 2 * Math.PI);
   ctx.fillStyle = color;
@@ -19,7 +19,7 @@ export function drawPoint(ctx, y, x, r, color) {
 /**
  * Draw line
  */
-export function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
+ function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
   ctx.beginPath();
   ctx.moveTo(ax * scale, ay * scale);
   ctx.lineTo(bx * scale, by * scale);
@@ -190,7 +190,7 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
  * Draw joints
  */
 export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
-  console.log(pose[0].keypoints.length);
+  // console.log(pose[0].keypoints.length);
   for (let i = 5; i < pose[0].keypoints.length; i++) {
     const keypoint = pose[0].keypoints[i];
 
@@ -207,10 +207,10 @@ export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
 function calcAngle([ay, ax], [by, bx], [cy, cx], [dy, dx], ctx, color) {
   const slope1 = (ay - by) / (ax - bx);
   const slope2 = (cy - dy) / (cx - dx);
-  console.log(slope1);
-  console.log(slope2);
+  // console.log(slope1);
+  // console.log(slope2);
   const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
-  console.log(angle* 180 / Math.PI);
+  // console.log(angle* 180 / Math.PI);
   
 const text = angle* 180 / Math.PI;
 ctx.beginPath();
@@ -218,4 +218,57 @@ ctx.beginPath();
       ctx.stroke();
 }
 
+export function interiorAngle(pose, setIntAngle){
+  const lShoulder = pose[0].keypoints[5];
+  const rShoulder = pose[0].keypoints[6];
+  const lElbow = pose[0].keypoints[7];
+  const rElbow = pose[0].keypoints[8];
+  const lWrist = pose[0].keypoints[9];
+  const rWrist = pose[0].keypoints[10];
 
+  const ay = lShoulder.y;
+  const ax = lShoulder.x;
+  const by = rShoulder.y;
+  const bx = rShoulder.x;
+  const dy = rElbow.y;
+  const dx = rElbow.x;
+   
+  const slope1 = (ay - by) / (ax - bx);
+  const slope2 = (by - dy) / (bx - dx);
+  // console.log(slope1);
+  // console.log(slope2);
+  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
+  // console.log(angle* 180 / Math.PI);
+  
+const angleReturn = angle* 180 / Math.PI;
+setIntAngle(angleReturn);
+
+}
+
+export function exteriorAngle(pose, setExtAngle){
+
+  const lShoulder = pose[0].keypoints[5];
+  const rShoulder = pose[0].keypoints[6];
+  const lElbow = pose[0].keypoints[7];
+  const rElbow = pose[0].keypoints[8];
+  const lWrist = pose[0].keypoints[9];
+  const rWrist = pose[0].keypoints[10];
+
+  const ay = rShoulder.y;
+  const ax = rShoulder.x;
+  const by = rElbow.y;
+  const bx = rElbow.x;
+  const dy = rWrist.y;
+  const dx = rWrist.x;
+   
+  const slope1 = (ay - by) / (ax - bx);
+  const slope2 = (by - dy) / (bx - dx);
+  // console.log(slope1);
+  // console.log(slope2);
+  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
+  // console.log(angle* 180 / Math.PI);
+  
+const angleReturn = angle* 180 / Math.PI;
+setExtAngle(angleReturn);
+
+}
