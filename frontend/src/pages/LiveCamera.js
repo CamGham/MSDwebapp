@@ -76,7 +76,12 @@ const LiveCamera = () => {
   }, []);
 
   useEffect(() => {
-    console.log(loadProgress);
+    if(loadProgress===2)
+    {
+      setModalShow(false);
+    }else{
+      setModalShow(true)
+    }
   }, [loadProgress]);
 
   const drawRect = (detections, ctx) => {
@@ -170,8 +175,8 @@ const LiveCamera = () => {
       <div>
         <BottomNav current={current} />
       </div>
-      {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>}
-      
+      {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
+      <ModalView show={modalShow}/>
       <div className="camCont">
         <Webcam
           ref={webcamRef}
