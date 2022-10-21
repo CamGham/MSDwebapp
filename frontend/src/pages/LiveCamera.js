@@ -10,7 +10,7 @@ import {
   exteriorAngle,
   interiorAngle,
 } from "../utilities";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/TopNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
@@ -90,7 +90,7 @@ const LiveCamera = () => {
       const [x, y, width, height] = prediction["bbox"];
       const text = prediction["class"];
 
-      const color = "red";
+      const color = "#90CAF9";
       ctx.strokeStyle = color;
       ctx.font = "18px Arial";
       ctx.fillStyle = color;

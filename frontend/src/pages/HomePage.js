@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import React, { useState } from "react";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/TopNav";
 
 const HomePage = () => {
   let current = 1;

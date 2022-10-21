@@ -5,12 +5,21 @@ import LoginPage from './pages/LoginPage';
 import HomePage from "./pages/HomePage";
 import LiveCamera from "./pages/LiveCamera";
 import ResultPage from "./pages/ResultPage";
+import {ThemeProvider, createTheme} from "@mui/material/styles"
+import { CssBaseline } from "@mui/material";
 
 function App() {
+  const darkTheme = createTheme({
+    palette:{
+      mode: 'dark',
+    },
+  });
+  
   
 
   return (
-
+<ThemeProvider theme={darkTheme}>
+  {/* <CssBaseline/> */}
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage/>}/>
@@ -21,6 +30,7 @@ function App() {
         <Route path="/results" element={<ResultPage/>}/>
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 }
 

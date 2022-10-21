@@ -1,4 +1,4 @@
-const color = "aqua";
+const color = "white";
 const lineWidth = 2;
 
 /**
