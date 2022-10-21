@@ -18,7 +18,8 @@ import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
 import { Button } from "@mui/material";
 import { v4 as uuid } from "uuid";
-import { firestore, setDoc, getDoc, doc, Timestamp } from "firebase/firestore";
+import { firestore } from "../firebase/firestore";
+import {addDoc, collection, Timestamp} from "firebase/firestore"
 
 const LiveCamera = () => {
   let current = 2;
@@ -63,7 +64,6 @@ const LiveCamera = () => {
   }, []);
 
   useEffect(() => {
-    console.log(loadProgress);
     if (loadProgress >= 1) {
       setModalShow(false);
     } else {
@@ -159,14 +159,13 @@ const LiveCamera = () => {
 
   const handleCapture = async (values) => {
     try {
-      const id = uuid();
-      console.log(id);
 
-      // const newDoc = await setDoc(doc(firestore, "shots", id), {
-      //   owner: values.name,
-      //   email: values.email,
-      //   date: Timestamp.now(),
-      // });
+      const newDoc = await addDoc(collection(firestore, "shots"), {
+        armInt: values.intAngle,
+        armExt: values.extAngle,
+        date: Timestamp.now(),
+      });
+      console.log("Doc: " + newDoc.id);
     } catch (e) {
       console.log(e);
     }
@@ -211,7 +210,12 @@ const LiveCamera = () => {
         />
       </div>
       <div className="captureCont">
-        <Button onClick={handleCapture(intAngle, extAngle)}>Capture</Button>
+        <Button onClick={ () => {
+          const angles={
+            intAngle,
+            extAngle
+          }
+          handleCapture(angles)}} variant="contained">Capture</Button>
       </div>
       <div className="angleCont">
         <AngleTable intAngle={intAngle} extAngle={extAngle} />
