@@ -77,7 +77,7 @@ const LiveCamera = () => {
 
   useEffect(() => {
     console.log(loadProgress);
-    if(loadProgress===2)
+    if(loadProgress >= 1)
     {
       setModalShow(false);
     }else{
