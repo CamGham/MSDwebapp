@@ -29,3 +29,6 @@
   display: flex;
   justify-content: center;
 }
+.captureCont{
+  background-color: red;
+}

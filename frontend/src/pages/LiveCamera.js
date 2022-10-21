@@ -16,7 +16,9 @@ import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
-
+import { Button } from "@mui/material";
+import { v4 as uuid } from "uuid";
+import { firestore, setDoc, getDoc, doc, Timestamp } from "firebase/firestore";
 
 const LiveCamera = () => {
   let current = 2;
@@ -29,21 +31,6 @@ const LiveCamera = () => {
   const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
   const [modalShow, setModalShow] = useState(false);
-  // const screenOrientation = useScreenOrientation();
-  // const { orientation, setOrientation } = useState(true);
-  // if (width > height) {
-  //   setOrientation(false);
-  // } else {
-  //   setOrientation(true);
-  // }
-
-  // const setCamera = () =>{
-  //   if(screenOrientation === 'portrait-primary'){
-  //     console.log("portrait: " + width + " " + height);
-  //   }else{
-  //     console.log("landscape: " + width + " " + height);
-  //   }
-  // }
 
   const runModels = async () => {
     //create detecotr for pose detection
@@ -77,11 +64,10 @@ const LiveCamera = () => {
 
   useEffect(() => {
     console.log(loadProgress);
-    if(loadProgress >= 1)
-    {
+    if (loadProgress >= 1) {
       setModalShow(false);
-    }else{
-      setModalShow(true)
+    } else {
+      setModalShow(true);
     }
   }, [loadProgress]);
 
@@ -171,13 +157,28 @@ const LiveCamera = () => {
     }
   };
 
+  const handleCapture = async (values) => {
+    try {
+      const id = uuid();
+      console.log(id);
+
+      // const newDoc = await setDoc(doc(firestore, "shots", id), {
+      //   owner: values.name,
+      //   email: values.email,
+      //   date: Timestamp.now(),
+      // });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="liveCont">
       <div>
         <BottomNav current={current} />
       </div>
       {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
-      <ModalView show={modalShow}/>
+      <ModalView show={modalShow} />
       <div className="camCont">
         <Webcam
           ref={webcamRef}
@@ -208,6 +209,9 @@ const LiveCamera = () => {
           }}
           ref={canvasRef}
         />
+      </div>
+      <div className="captureCont">
+        <Button onClick={handleCapture(intAngle, extAngle)}>Capture</Button>
       </div>
       <div className="angleCont">
         <AngleTable intAngle={intAngle} extAngle={extAngle} />
