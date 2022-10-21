@@ -4,12 +4,19 @@ import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import "@tensorflow/tfjs-backend-webgl";
-import { drawKeypoints, drawSkeleton, exteriorAngle, interiorAngle } from "../utilities";
+import {
+  drawKeypoints,
+  drawSkeleton,
+  exteriorAngle,
+  interiorAngle,
+} from "../utilities";
 import BottomNav from "../components/BottomNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
+import ModalView from "../components/ModalView";
+
 
 const LiveCamera = () => {
   let current = 2;
@@ -20,6 +27,8 @@ const LiveCamera = () => {
   const [extAngle, setExtAngle] = useState(0);
 
   const { width, height } = useWindowDimensions();
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [modalShow, setModalShow] = useState(false);
   // const screenOrientation = useScreenOrientation();
   // const { orientation, setOrientation } = useState(true);
   // if (width > height) {
@@ -28,13 +37,14 @@ const LiveCamera = () => {
   //   setOrientation(true);
   // }
 
-// const setCamera = () =>{
-//   if(screenOrientation === 'portrait-primary'){
-//     console.log("portrait: " + width + " " + height);
-//   }else{
-//     console.log("landscape: " + width + " " + height);
-//   }
-// }
+  // const setCamera = () =>{
+  //   if(screenOrientation === 'portrait-primary'){
+  //     console.log("portrait: " + width + " " + height);
+  //   }else{
+  //     console.log("landscape: " + width + " " + height);
+  //   }
+  // }
+
   const runModels = async () => {
     //create detecotr for pose detection
     const detectorConfig = {
@@ -45,11 +55,15 @@ const LiveCamera = () => {
       detectorConfig
     );
     //load coco for object detection
-    const model = await cocoSsd.load();
+
+    const model = await cocoSsd.load().finally(() => {
+      setLoadProgress((current) => (current += 1));
+    });
+
     setInterval(() => {
       identify(detector);
       detect(model);
-    }, 100);
+    }, 10);
   };
 
   useEffect(() => {
@@ -60,6 +74,16 @@ const LiveCamera = () => {
     runModels();
     // setCamera();
   }, []);
+
+  useEffect(() => {
+    console.log(loadProgress);
+    if(loadProgress===2)
+    {
+      setModalShow(false);
+    }else{
+      setModalShow(true)
+    }
+  }, [loadProgress]);
 
   const drawRect = (detections, ctx) => {
     detections.forEach((prediction) => {
@@ -95,11 +119,26 @@ const LiveCamera = () => {
 
       const poses = await detector.estimatePoses(video);
 
-      drawCanvas(poses, video, videoWidth, videoHeight, canvasRef, setIntAngle, setExtAngle);
+      drawCanvas(
+        poses,
+        video,
+        videoWidth,
+        videoHeight,
+        canvasRef,
+        setIntAngle,
+        setExtAngle
+      );
     }
   };
 
-  const drawCanvas = (pose, video, videoWidth, videoHeight, canvas, setIntAngle) => {
+  const drawCanvas = (
+    pose,
+    video,
+    videoWidth,
+    videoHeight,
+    canvas,
+    setIntAngle
+  ) => {
     const ctx = canvas.current.getContext("2d");
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
@@ -137,6 +176,8 @@ const LiveCamera = () => {
       <div>
         <BottomNav current={current} />
       </div>
+      {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
+      <ModalView show={modalShow}/>
       <div className="camCont">
         <Webcam
           ref={webcamRef}
@@ -169,9 +210,8 @@ const LiveCamera = () => {
         />
       </div>
       <div className="angleCont">
-      <AngleTable intAngle={intAngle} extAngle={extAngle}/>
+        <AngleTable intAngle={intAngle} extAngle={extAngle} />
       </div>
-      
     </div>
   );
 };

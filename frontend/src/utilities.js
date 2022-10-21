@@ -241,7 +241,7 @@ export function interiorAngle(pose, setIntAngle){
   // console.log(angle* 180 / Math.PI);
   
 const angleReturn = angle* 180 / Math.PI;
-setIntAngle(angleReturn);
+setIntAngle(Math.round(angleReturn));
 
 }
 
@@ -269,6 +269,6 @@ export function exteriorAngle(pose, setExtAngle){
   // console.log(angle* 180 / Math.PI);
   
 const angleReturn = angle* 180 / Math.PI;
-setExtAngle(angleReturn);
+setExtAngle(Math.round(angleReturn));
 
 }

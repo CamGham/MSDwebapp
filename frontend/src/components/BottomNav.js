@@ -10,7 +10,6 @@ const BottomNav = (props) => {
     let navigate = useNavigate();
   const [value, setValue] = useState(props.current);
 useEffect(()=>{
-    console.log(value)
     if(value == 0)
     {
         navigate("/results");

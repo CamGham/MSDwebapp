@@ -1,0 +1,23 @@
+.container {
+  border: 2px;
+  border-color: blue;
+  border-style: solid;
+
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 10px;
+}
+.container * {
+  flex: 1;
+}
+.name {
+  justify-content: start;
+  align-items: flex-start;
+}
+.angle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
