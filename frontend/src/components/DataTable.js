@@ -54,7 +54,7 @@ console.log(data);
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {"PUT DATE HERE"}
+                {row.date.toDate().toDateString()}
               </TableCell>
               <TableCell align="right">{row.armInt}</TableCell>
               <TableCell align="right">{row.armExt}</TableCell>
