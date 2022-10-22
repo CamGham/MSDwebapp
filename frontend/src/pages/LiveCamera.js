@@ -10,7 +10,7 @@ import {
   exteriorAngle,
   interiorAngle,
 } from "../utilities";
-import BottomNav from "../components/TopNav";
+import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
@@ -179,7 +179,7 @@ const LiveCamera = () => {
   return (
     <div className="liveCont">
       <div>
-        <BottomNav current={current} />
+        <TopNav current={current} />
       </div>
       {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
       <ModalView show={modalShow} />

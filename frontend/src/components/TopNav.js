@@ -5,7 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useNavigate } from "react-router-dom";
 import "./TopNav.css";
-const BottomNav = (props) => {
+const TopNav = (props) => {
 
     let navigate = useNavigate();
   const [value, setValue] = useState(props.current);
@@ -57,4 +57,4 @@ useEffect(()=>{
   );
 };
 
-export default BottomNav;
+export default TopNav;
