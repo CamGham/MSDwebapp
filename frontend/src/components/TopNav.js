@@ -4,8 +4,8 @@ import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import HomeIcon from "@mui/icons-material/Home";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useNavigate } from "react-router-dom";
-
-const BottomNav = (props) => {
+import "./TopNav.css";
+const TopNav = (props) => {
 
     let navigate = useNavigate();
   const [value, setValue] = useState(props.current);
@@ -27,11 +27,23 @@ useEffect(()=>{
   return (
     <div>
       <BottomNavigation
+      className="nav"
         showLabels
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        // sx={{
+        //   ".MuiBottomNavigation-root":{
+        //     color: "#2b2b2b"
+        //   },
+        //   "& .MuiBottomNavigationAction-root, .Mui-selected, svg": {
+        //     color: "#7E7E7E"
+        //   },
+        //   "& .Mui-selected, .Mui-selected > svg":{
+        //     color:"#ffff"
+        //   }
+        // }}
       >
         <BottomNavigationAction
           label="Results"
@@ -45,4 +57,4 @@ useEffect(()=>{
   );
 };
 
-export default BottomNav;
+export default TopNav;

@@ -10,13 +10,19 @@ import {
   exteriorAngle,
   interiorAngle,
 } from "../utilities";
-import BottomNav from "../components/BottomNav";
+import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
+import { Button } from "@mui/material";
+import { v4 as uuid } from "uuid";
+import { firestore } from "../firebase/firestore";
+import {addDoc, collection, Timestamp} from "firebase/firestore"
 
+import { getEmail } from "../redux/user/userSlice";
+import { useSelector } from "react-redux";
 
 const LiveCamera = () => {
   let current = 2;
@@ -25,25 +31,11 @@ const LiveCamera = () => {
 
   const [intAngle, setIntAngle] = useState(0);
   const [extAngle, setExtAngle] = useState(0);
+  const email = useSelector(getEmail);
 
   const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
   const [modalShow, setModalShow] = useState(false);
-  // const screenOrientation = useScreenOrientation();
-  // const { orientation, setOrientation } = useState(true);
-  // if (width > height) {
-  //   setOrientation(false);
-  // } else {
-  //   setOrientation(true);
-  // }
-
-  // const setCamera = () =>{
-  //   if(screenOrientation === 'portrait-primary'){
-  //     console.log("portrait: " + width + " " + height);
-  //   }else{
-  //     console.log("landscape: " + width + " " + height);
-  //   }
-  // }
 
   const runModels = async () => {
     //create detecotr for pose detection
@@ -76,12 +68,10 @@ const LiveCamera = () => {
   }, []);
 
   useEffect(() => {
-    console.log(loadProgress);
-    if(loadProgress >= 1)
-    {
+    if (loadProgress >= 1) {
       setModalShow(false);
-    }else{
-      setModalShow(true)
+    } else {
+      setModalShow(true);
     }
   }, [loadProgress]);
 
@@ -90,7 +80,7 @@ const LiveCamera = () => {
       const [x, y, width, height] = prediction["bbox"];
       const text = prediction["class"];
 
-      const color = "red";
+      const color = "#90CAF9";
       ctx.strokeStyle = color;
       ctx.font = "18px Arial";
       ctx.fillStyle = color;
@@ -171,13 +161,28 @@ const LiveCamera = () => {
     }
   };
 
+  const handleCapture = async (values) => {
+    try {
+
+      const newDoc = await addDoc(collection(firestore, "shots"), {
+        email: email,
+        armInt: values.intAngle,
+        armExt: values.extAngle,
+        date: Timestamp.now(),
+      });
+      console.log("Doc: " + newDoc.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="liveCont">
       <div>
-        <BottomNav current={current} />
+        <TopNav current={current} />
       </div>
       {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
-      <ModalView show={modalShow}/>
+      <ModalView show={modalShow} />
       <div className="camCont">
         <Webcam
           ref={webcamRef}
@@ -208,6 +213,14 @@ const LiveCamera = () => {
           }}
           ref={canvasRef}
         />
+      </div>
+      <div className="captureCont">
+        <Button onClick={ () => {
+          const angles={
+            intAngle,
+            extAngle
+          }
+          handleCapture(angles)}} variant="contained">Capture</Button>
       </div>
       <div className="angleCont">
         <AngleTable intAngle={intAngle} extAngle={extAngle} />
