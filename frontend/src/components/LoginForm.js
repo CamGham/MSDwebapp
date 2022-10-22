@@ -5,9 +5,14 @@ import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import "./LoginForm.css";
 
+import { useDispatch } from "react-redux";
+import { changeEmail } from "../redux/user/userSlice";
+
 const LoginForm = (props) => {
   const auth = props.auth;
   const navigate = props.navigate;
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -24,6 +29,7 @@ const LoginForm = (props) => {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredentials) => {
           const user = userCredentials.user;
+          dispatch(changeEmail(user.email));
           navigate("/home");
         })
         .catch((error) => {

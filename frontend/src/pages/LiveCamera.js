@@ -10,7 +10,7 @@ import {
   exteriorAngle,
   interiorAngle,
 } from "../utilities";
-import BottomNav from "../components/TopNav";
+import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
 import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
@@ -21,6 +21,9 @@ import { v4 as uuid } from "uuid";
 import { firestore } from "../firebase/firestore";
 import {addDoc, collection, Timestamp} from "firebase/firestore"
 
+import { getEmail } from "../redux/user/userSlice";
+import { useSelector } from "react-redux";
+
 const LiveCamera = () => {
   let current = 2;
   const webcamRef = useRef(null);
@@ -28,6 +31,7 @@ const LiveCamera = () => {
 
   const [intAngle, setIntAngle] = useState(0);
   const [extAngle, setExtAngle] = useState(0);
+  const email = useSelector(getEmail);
 
   const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
@@ -161,6 +165,7 @@ const LiveCamera = () => {
     try {
 
       const newDoc = await addDoc(collection(firestore, "shots"), {
+        email: email,
         armInt: values.intAngle,
         armExt: values.extAngle,
         date: Timestamp.now(),
@@ -174,7 +179,7 @@ const LiveCamera = () => {
   return (
     <div className="liveCont">
       <div>
-        <BottomNav current={current} />
+        <TopNav current={current} />
       </div>
       {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
       <ModalView show={modalShow} />
