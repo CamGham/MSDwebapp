@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Button from "@mui/material/Button";
-import logo from "../assets/shooterlogo.png";
+import logo from "../assets/shooterlogo2.png";
 
 const LandingPage = () => {
   let navigate = useNavigate();
