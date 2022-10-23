@@ -13,7 +13,8 @@ const{
   const [show,setShow] = useState(false)
   const handleClose = () => {
     setShow(false);
-    // setShowModal(false);
+
+    setShowModal(false);
   }
 useEffect(()=>{
   setShow(visible);

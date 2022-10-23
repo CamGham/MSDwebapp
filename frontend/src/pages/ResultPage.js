@@ -7,6 +7,7 @@ import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import AnalysisView from "../components/AnalysisView";
+import { Button } from "@mui/material";
 
 const ResultPage = () => {
   let current = 0;
@@ -54,11 +55,11 @@ const ResultPage = () => {
   }, []);
 
 
-  useEffect(() => {
-    console.log("current state of modal showing is: " + showModal);
 
-  }, [showModal]);
-
+  const analyse = (e) =>{
+    e.preventDefault();
+    setShowModal(true);
+  }
 
   return (
     <div className="resultsCont">
@@ -66,6 +67,15 @@ const ResultPage = () => {
       <AnalysisView data={angleData} setShowModal={setShowModal} visible={showModal}/>
       <TopNav current={current} />
       <DGrid data={angleData} setSelectedRow={setSelectedRow}/>
+      {angleData.length > 0 && (
+          <div className="buttonContainer">
+            <div className="analyse">
+              <Button className="analyseButton" onClick={analyse} variant="outlined">
+                Analyse
+              </Button>
+            </div>
+          </div>
+        )}
     </div>
   );
 };
