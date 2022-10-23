@@ -16,9 +16,12 @@ import "./LiveCamera.css";
 // import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { firestore } from "../firebase/firestore";
-import {addDoc, collection, Timestamp} from "firebase/firestore"
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+
+import { isMobile } from "react-device-detect";
+import CameraswitchIcon from "@mui/icons-material/Cameraswitch";
 
 import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
@@ -35,6 +38,11 @@ const LiveCamera = () => {
   // const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
   const [modalShow, setModalShow] = useState(false);
+
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [contraints, setConstraints] = useState({
+    facingMode: "user",
+  });
 
   const runModels = async () => {
     //create detecotr for pose detection
@@ -162,7 +170,6 @@ const LiveCamera = () => {
 
   const handleCapture = async (values) => {
     try {
-
       const newDoc = await addDoc(collection(firestore, "shots"), {
         email: email,
         armInt: values.intAngle,
@@ -172,6 +179,19 @@ const LiveCamera = () => {
       console.log("Doc: " + newDoc.id);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+    if (isFlipped) {
+      setConstraints({
+        facingMode: { exact: "environment" },
+      });
+    } else {
+      setConstraints({
+        facingMode: "user",
+      });
     }
   };
 
@@ -197,6 +217,7 @@ const LiveCamera = () => {
             // width: width,
             // height: height,
           }}
+          videoConstraints={contraints}
         />
         <canvas
           style={{
@@ -212,14 +233,27 @@ const LiveCamera = () => {
           }}
           ref={canvasRef}
         />
+        {isMobile && (
+          <div className="camFlip">
+            <IconButton onClick={handleFlip}>
+              <CameraswitchIcon />
+            </IconButton>
+          </div>
+        )}
       </div>
       <div className="captureCont">
-        <Button onClick={ () => {
-          const angles={
-            intAngle,
-            extAngle
-          }
-          handleCapture(angles)}} variant="contained">Capture</Button>
+        <Button
+          onClick={() => {
+            const angles = {
+              intAngle,
+              extAngle,
+            };
+            handleCapture(angles);
+          }}
+          variant="contained"
+        >
+          Capture
+        </Button>
       </div>
       <div className="angleCont">
         <AngleTable intAngle={intAngle} extAngle={extAngle} />
