@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
-import DataTable from "../components/DataTable";
+import DGrid from "../components/DGrid";
 import { firestore } from "../firebase/firestore";
 
 import { getEmail } from "../redux/user/userSlice";
@@ -13,6 +13,8 @@ const ResultPage = () => {
   const email = useSelector(getEmail);
   const [angleData, setAngleData] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  const [selectedRow, setSelectedRow] = useState([]);
 
   const getData = async () => {
     try {
@@ -49,8 +51,8 @@ const ResultPage = () => {
     (async () => {
       await getData();
     })();
-
   }, []);
+
 
   useEffect(() => {
     console.log("current state of modal showing is: " + showModal);
@@ -60,9 +62,10 @@ const ResultPage = () => {
 
   return (
     <div className="resultsCont">
-      <AnalysisView show={showModal}/>
+      {/* setShowModal={setShowModal} show={showModal} */}
+      <AnalysisView data={angleData} setShowModal={setShowModal} visible={showModal}/>
       <TopNav current={current} />
-      <DataTable data={angleData} setShowModal={setShowModal}/>
+      <DGrid data={angleData} setSelectedRow={setSelectedRow}/>
     </div>
   );
 };

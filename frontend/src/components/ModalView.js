@@ -1,22 +1,16 @@
-import React, {useState} from 'react'
-import { Modal } from '@mui/material'
-import "./ModalView.css"
+import React, { useState } from "react";
+import { Modal } from "@mui/material";
+import "./ModalView.css";
 
 const ModalView = (props) => {
-    const show = props.show;
+  const show = props.show;
   return (
     <div>
-        <Modal
-        open={show}
-        
-        >
-            
-            <h1>
-                Loading...
-            </h1>
-        </Modal>
+      <Modal open={show}>
+        <h1>Loading...</h1>
+      </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default ModalView
+export default ModalView;

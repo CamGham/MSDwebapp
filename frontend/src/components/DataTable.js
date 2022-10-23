@@ -13,16 +13,12 @@ import { Button } from '@mui/material';
 const DataTable = (props) => {
 const {
   data,
-  setShowModal
+  setShowModal,
+  show
 } = props;
 
 
-console.log(data);
-
-    const createData = (name, calories, fat ) =>{
-        return { name, calories, fat};
-      }
-
+// console.log(data);
 
     //   const rows = [
     //     createData('Frozen yoghurt', 159, 6.0),
@@ -48,7 +44,6 @@ console.log(data);
             <TableCell>Date </TableCell>
             <TableCell align="right">Arm Int Angle °</TableCell>
             <TableCell align="right">Arm Ext Angle °</TableCell>
-            <TableCell align="right">Analysis</TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
@@ -64,11 +59,6 @@ console.log(data);
               </TableCell>
               <TableCell align="right">{row.armInt}</TableCell>
               <TableCell align="right">{row.armExt}</TableCell>
-              <TableCell align='right'>
-                <Button onClick={()=> setShowModal(true)}>
-                  View Details
-                </Button>
-              </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
