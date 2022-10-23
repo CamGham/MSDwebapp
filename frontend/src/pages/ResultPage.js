@@ -6,11 +6,13 @@ import { firestore } from "../firebase/firestore";
 import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import AnalysisView from "../components/AnalysisView";
 
 const ResultPage = () => {
   let current = 0;
   const email = useSelector(getEmail);
   const [angleData, setAngleData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const getData = async () => {
     try {
@@ -47,11 +49,20 @@ const ResultPage = () => {
     (async () => {
       await getData();
     })();
+
   }, []);
+
+  useEffect(() => {
+    console.log("current state of modal showing is: " + showModal);
+
+  }, [showModal]);
+
+
   return (
-    <div>
+    <div className="resultsCont">
+      <AnalysisView show={showModal}/>
       <TopNav current={current} />
-      <DataTable data={angleData} />
+      <DataTable data={angleData} setShowModal={setShowModal}/>
     </div>
   );
 };

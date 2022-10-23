@@ -8,6 +8,7 @@ const ModalView = (props) => {
     <div>
         <Modal
         open={show}
+        
         >
             
             <h1>

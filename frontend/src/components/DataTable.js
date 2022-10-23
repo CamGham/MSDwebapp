@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,11 +6,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
 
 
 
 const DataTable = (props) => {
-const data = props.data;
+const {
+  data,
+  setShowModal
+} = props;
+
 
 console.log(data);
 
@@ -43,6 +48,7 @@ console.log(data);
             <TableCell>Date </TableCell>
             <TableCell align="right">Arm Int Angle °</TableCell>
             <TableCell align="right">Arm Ext Angle °</TableCell>
+            <TableCell align="right">Analysis</TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
@@ -58,6 +64,11 @@ console.log(data);
               </TableCell>
               <TableCell align="right">{row.armInt}</TableCell>
               <TableCell align="right">{row.armExt}</TableCell>
+              <TableCell align='right'>
+                <Button onClick={()=> setShowModal(true)}>
+                  View Details
+                </Button>
+              </TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
