@@ -10,15 +10,15 @@ const TopNav = (props) => {
     let navigate = useNavigate();
   const [value, setValue] = useState(props.current);
 useEffect(()=>{
-    if(value == 0)
+    if(value === 0)
     {
         navigate("/results");
     }
-    if(value == 1)
+    if(value === 1)
     {
         navigate("/home");
     }
-    if(value == 2)
+    if(value === 2)
     {
         navigate("/camera");
     }

@@ -221,10 +221,7 @@ ctx.beginPath();
 export function interiorAngle(pose, setIntAngle){
   const lShoulder = pose[0].keypoints[5];
   const rShoulder = pose[0].keypoints[6];
-  const lElbow = pose[0].keypoints[7];
   const rElbow = pose[0].keypoints[8];
-  const lWrist = pose[0].keypoints[9];
-  const rWrist = pose[0].keypoints[10];
 
   const ay = lShoulder.y;
   const ax = lShoulder.x;
@@ -247,11 +244,8 @@ setIntAngle(Math.round(angleReturn));
 
 export function exteriorAngle(pose, setExtAngle){
 
-  const lShoulder = pose[0].keypoints[5];
   const rShoulder = pose[0].keypoints[6];
-  const lElbow = pose[0].keypoints[7];
   const rElbow = pose[0].keypoints[8];
-  const lWrist = pose[0].keypoints[9];
   const rWrist = pose[0].keypoints[10];
 
   const ay = rShoulder.y;

@@ -1,3 +1,17 @@
 h2{
     color: white;
 }
+h4{
+    color: white;
+}
+.homeCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* .mainCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
