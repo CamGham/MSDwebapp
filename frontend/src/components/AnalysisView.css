@@ -1,0 +1,11 @@
+.dataView{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.dataView *{
+    margin: 8px;
+    color: gainsboro;
+}

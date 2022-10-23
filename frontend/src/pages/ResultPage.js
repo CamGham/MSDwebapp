@@ -48,6 +48,7 @@ const ResultPage = () => {
     }
   };
 
+  
   useEffect(() => {
     (async () => {
       await getData();
@@ -64,7 +65,7 @@ const ResultPage = () => {
   return (
     <div className="resultsCont">
       {/* setShowModal={setShowModal} show={showModal} */}
-      <AnalysisView data={angleData} setShowModal={setShowModal} visible={showModal}/>
+      <AnalysisView data={selectedRow} setShowModal={setShowModal} visible={showModal}/>
       <TopNav current={current} />
       <DGrid data={angleData} setSelectedRow={setSelectedRow}/>
       {angleData.length > 0 && (
