@@ -233,7 +233,7 @@ const LiveCamera = () => {
           }}
           ref={canvasRef}
         />
-        {!isMobile && (
+        {isMobile && (
           <div className="camFlip">
             <IconButton onClick={handleFlip} size="small">
               <CameraswitchIcon fontSize="large"/>
