@@ -105,6 +105,7 @@ const DGrid = (props) => {
             const selectedIDs = new Set(ids);
             const selectedRows = rows.filter((row) => selectedIDs.has(row.id));
             setSelectedRow(selectedRows);
+            // console.log(selectedRows[0])
           }}
           rowsPerPageOptions={[8, 10, 20]}
         />
