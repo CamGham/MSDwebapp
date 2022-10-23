@@ -12,12 +12,11 @@ import {
 } from "../utilities";
 import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
-import useWindowDimensions from "../components/useWindowDimensions";
+// import useWindowDimensions from "../components/useWindowDimensions";
 // import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
 import { Button } from "@mui/material";
-import { v4 as uuid } from "uuid";
 import { firestore } from "../firebase/firestore";
 import {addDoc, collection, Timestamp} from "firebase/firestore"
 
@@ -33,7 +32,7 @@ const LiveCamera = () => {
   const [extAngle, setExtAngle] = useState(0);
   const email = useSelector(getEmail);
 
-  const { width, height } = useWindowDimensions();
+  // const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
   const [modalShow, setModalShow] = useState(false);
 
