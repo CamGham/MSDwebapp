@@ -2,8 +2,10 @@
 ## MSDwebapp Shooter
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-MSDwebapp is my React app project for Mobile Systems Development. 
-You can use it on your computer or mobile at [https://msdshooter.herokuapp.com ](https://msdshooter.herokuapp.com )
+MSDwebapp is my React app project aimed at helping players develop a consistant jumpshot. Utilizing tensorflow's posenet to identify body positioning, an analysis of a basketball players form can take place, providing the ability to give the user statistical results in order to help improve their jumpshot form thus scoring potential.
+
+This web app can be run either on your computer or mobile at [https://msdshooter.herokuapp.com ](https://msdshooter.herokuapp.com ).
+Users will be able to create an account allowing for a history of statistical results to be kept which allows for a visual representation of their progression.
 
 What has been developed:
 * Creation of accounts
@@ -15,11 +17,10 @@ What has been developed:
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* React 
+* React library
 * Firebase for Auth + Firestore
 * Heroku for hosting
+* TensorFlow.js models
 
 
 <!-- GETTING STARTED -->
