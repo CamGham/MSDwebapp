@@ -17,9 +17,10 @@ const DGrid = (props) => {
   // define table columns
   const columns = [
     { field: "id", headerName: "ID", hide: true },
-    { field: "date", headerName: "Date", flex:2 },
-    { field: "armInt", headerName: "Arm Int Angle °" , flex:1 },
-    { field: "armExt", headerName: "Arm Ext Angle °" , flex:1 },
+    { field: "date", headerName: "Date", flex: 2 },
+    { field: "relAngle", headerName: "Release Angle°", flex: 1 },
+    { field: "armInt", headerName: "Arm Int Angle°", flex: 1 },
+    { field: "armExt", headerName: "Arm Ext Angle°", flex: 1 },
   ];
 
   const rows = data.map((row) => ({
@@ -28,6 +29,7 @@ const DGrid = (props) => {
       row.date.toDate().toDateString() +
       ", " +
       row.date.toDate().toLocaleTimeString(),
+    relAngle: row.relAngle,
     armInt: row.armInt,
     armExt: row.armExt,
   }));
@@ -92,7 +94,7 @@ const DGrid = (props) => {
     //   </Table>
     // </TableContainer>
     // </div>
-    <div style={{ display: "flex", height: "100%", width: '100%' }}>
+    <div style={{ display: "flex", height: "100%", width: "100%" }}>
       <div style={{ flexGrow: 1 }}>
         <DataGrid
           rows={rows}

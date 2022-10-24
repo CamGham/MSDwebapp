@@ -9,6 +9,7 @@ import {
   drawSkeleton,
   exteriorAngle,
   interiorAngle,
+  releaseAngle
 } from "../utilities";
 import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
@@ -33,6 +34,8 @@ const LiveCamera = () => {
 
   const [intAngle, setIntAngle] = useState(0);
   const [extAngle, setExtAngle] = useState(0);
+  const [relAngle, setRelAngle] = useState(0);
+  
   const email = useSelector(getEmail);
 
   // const { width, height } = useWindowDimensions();
@@ -143,6 +146,7 @@ const LiveCamera = () => {
     drawSkeleton(pose, 0.3, ctx);
     interiorAngle(pose, setIntAngle);
     exteriorAngle(pose, setExtAngle);
+    releaseAngle(pose, setRelAngle);
   };
 
   const detect = async (model) => {
@@ -174,6 +178,7 @@ const LiveCamera = () => {
         email: email,
         armInt: values.intAngle,
         armExt: values.extAngle,
+        relAngle: values.relAngle,
         date: Timestamp.now(),
       });
       console.log("Doc: " + newDoc.id);
@@ -247,6 +252,7 @@ const LiveCamera = () => {
             const angles = {
               intAngle,
               extAngle,
+              relAngle
             };
             handleCapture(angles);
           }}
@@ -256,7 +262,7 @@ const LiveCamera = () => {
         </Button>
       </div>
       <div className="angleCont">
-        <AngleTable intAngle={intAngle} extAngle={extAngle} />
+        <AngleTable intAngle={intAngle} extAngle={extAngle} relAngle={relAngle} />
       </div>
     </div>
   );

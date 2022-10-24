@@ -238,7 +238,7 @@ export function interiorAngle(pose, setIntAngle){
   // console.log(angle* 180 / Math.PI);
   
 const angleReturn = angle* 180 / Math.PI;
-setIntAngle(Math.round(angleReturn));
+setIntAngle(Math.abs(Math.round(angleReturn)));
 
 }
 
@@ -263,6 +263,31 @@ export function exteriorAngle(pose, setExtAngle){
   // console.log(angle* 180 / Math.PI);
   
 const angleReturn = angle* 180 / Math.PI;
-setExtAngle(Math.round(angleReturn));
+setExtAngle(Math.abs(Math.round(angleReturn)));
+
+}
+
+export function releaseAngle(pose, setRelAngle){
+
+  const rShoulder = pose[0].keypoints[6];
+  const rWrist = pose[0].keypoints[10];
+
+  const ay = rShoulder.y;
+  const ax = rShoulder.x;
+  const by = rWrist.y;
+  const bx = rWrist.x;
+
+  const dy = rShoulder.y;
+  const dx = rWrist.x;
+   
+  const slope1 = (ay - by) / (ax - bx);
+  const slope2 = (ay - dy) / (ax - dx);
+  // console.log(slope1);
+  // console.log(slope2);
+  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
+  // console.log(angle* 180 / Math.PI);
+  
+const angleReturn = angle* 180 / Math.PI;
+setRelAngle(Math.abs(Math.round(angleReturn)));
 
 }

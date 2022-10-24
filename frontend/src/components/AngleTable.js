@@ -7,6 +7,7 @@ const AngleTable = (props) => {
     <div className='table'>
         <AngleComponent angle={props.intAngle} name={"Arm Int"}/>
         <AngleComponent angle={props.extAngle} name={"Arm Ext"}/>
+        <AngleComponent angle={props.relAngle} name={"Release"}/>
         
     </div>
   )

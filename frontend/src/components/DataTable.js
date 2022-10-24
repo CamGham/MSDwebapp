@@ -42,8 +42,7 @@ const {
         <TableHead>
           <TableRow>
             <TableCell>Date </TableCell>
-            <TableCell align="right">Arm Int Angle °</TableCell>
-            <TableCell align="right">Arm Ext Angle °</TableCell>
+            <TableCell align="right">Release Angle°</TableCell>
             {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
@@ -57,8 +56,7 @@ const {
               <TableCell component="th" scope="row">
                 {row.date.toDate().toDateString() + ", " +  row.date.toDate().toLocaleTimeString()}
               </TableCell>
-              <TableCell align="right">{row.armInt}</TableCell>
-              <TableCell align="right">{row.armExt}</TableCell>
+              <TableCell align="right">{row.relAngle}</TableCell>
               {/* <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell> */}
             </TableRow>
