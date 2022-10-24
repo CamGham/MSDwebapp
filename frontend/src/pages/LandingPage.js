@@ -16,6 +16,7 @@ const LandingPage = () => {
           <Button
             className="login"
             variant="contained"
+            data-testid="loginButton"
             onClick={() => {
               navigate("/login");
             }}
@@ -27,6 +28,7 @@ const LandingPage = () => {
           <Button
             className="register"
             variant="outlined"
+            data-testid="regButton"
             onClick={() => {
               navigate("/register");
             }}
