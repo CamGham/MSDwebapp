@@ -64,7 +64,7 @@ const LoginForm = (props) => {
             />
           </div>
           <div className="compCont">
-            <Button id="login" type="submit" variant="contained">
+            <Button id="loginButt" type="submit" variant="contained">
               Login
             </Button>
           </div>

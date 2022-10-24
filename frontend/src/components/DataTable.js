@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,18 +6,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
 
 
 
 const DataTable = (props) => {
-const data = props.data;
+const {
+  data,
+  setShowModal,
+  show
+} = props;
 
-console.log(data);
 
-    const createData = (name, calories, fat ) =>{
-        return { name, calories, fat};
-      }
-
+// console.log(data);
 
     //   const rows = [
     //     createData('Frozen yoghurt', 159, 6.0),
@@ -37,7 +38,7 @@ console.log(data);
   return (
     <div>
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Date </TableCell>

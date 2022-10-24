@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
-import DataTable from "../components/DataTable";
+import DGrid from "../components/DGrid";
 import { firestore } from "../firebase/firestore";
 
 import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import AnalysisView from "../components/AnalysisView";
+import { Button } from "@mui/material";
 
 const ResultPage = () => {
   let current = 0;
   const email = useSelector(getEmail);
   const [angleData, setAngleData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const [selectedRow, setSelectedRow] = useState([]);
 
   const getData = async () => {
     try {
@@ -43,15 +48,35 @@ const ResultPage = () => {
     }
   };
 
+  
   useEffect(() => {
     (async () => {
       await getData();
     })();
   }, []);
+
+
+
+  const analyse = (e) =>{
+    e.preventDefault();
+    setShowModal(true);
+  }
+
   return (
-    <div>
+    <div className="resultsCont">
+      {/* setShowModal={setShowModal} show={showModal} */}
+      <AnalysisView data={selectedRow} setShowModal={setShowModal} visible={showModal}/>
       <TopNav current={current} />
-      <DataTable data={angleData} />
+      <DGrid data={angleData} setSelectedRow={setSelectedRow}/>
+      {angleData.length > 0 && (
+          <div className="buttonContainer">
+            <div className="analyse">
+              <Button className="analyseButton" onClick={analyse} variant="outlined">
+                Analyse
+              </Button>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

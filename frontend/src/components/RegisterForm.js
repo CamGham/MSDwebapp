@@ -101,7 +101,7 @@ const RegisterForm = (props) => {
           </div>
           <div className="compCont">
             <TextField
-              id="password"
+              id="passwordReg"
               variant="outlined"
               type="password"
               label="Password"
@@ -122,7 +122,7 @@ const RegisterForm = (props) => {
             />
           </div>
           <div className="compCont">
-            <Button id="register" type="submit" variant="contained">
+            <Button id="regButt" type="submit" variant="contained">
               Register
             </Button>
           </div>
