@@ -19,7 +19,7 @@ const HomePage = () => {
   const getData = async () => {
     try {
       // let exists = false;
-
+      console.log(email);
       const dataQuery = query(
         collection(firestore, "shots"),
         where("email", "==", email), orderBy("date", "desc"), limit(3)
