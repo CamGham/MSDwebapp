@@ -9,7 +9,7 @@ function toTuple(y, x) {
 }
 
 /* Draw point */
- function drawPoint(ctx, y, x, r, color) {
+function drawPoint(ctx, y, x, r, color) {
   ctx.beginPath();
   ctx.arc(x, y, r, 0, 2 * Math.PI);
   ctx.fillStyle = color;
@@ -19,7 +19,7 @@ function toTuple(y, x) {
 /**
  * Draw line
  */
- function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
+function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
   ctx.beginPath();
   ctx.moveTo(ax * scale, ay * scale);
   ctx.lineTo(bx * scale, by * scale);
@@ -57,8 +57,14 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
   }
 
   //angle between lShoulder and lElbow
-  calcAngle(toTuple(rShoulder.y, rShoulder.x),toTuple(lShoulder.y, lShoulder.x),toTuple(lShoulder.y, lShoulder.x),toTuple(lElbow.y, lElbow.x), ctx, "red")
-  
+  calcAngle(
+    toTuple(rShoulder.y, rShoulder.x),
+    toTuple(lShoulder.y, lShoulder.x),
+    toTuple(lShoulder.y, lShoulder.x),
+    toTuple(lElbow.y, lElbow.x),
+    ctx,
+    "red"
+  );
 
   //left arm top
   if (lShoulder.score > minConfidence && lElbow.score > minConfidence) {
@@ -72,8 +78,14 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
   }
 
   //angle between lElbow and lWrist
-  calcAngle(toTuple(lShoulder.y, lShoulder.x),toTuple(lElbow.y, lElbow.x),toTuple(lElbow.y, lElbow.x),toTuple(lWrist.y, lWrist.x), ctx, color)
- 
+  calcAngle(
+    toTuple(lShoulder.y, lShoulder.x),
+    toTuple(lElbow.y, lElbow.x),
+    toTuple(lElbow.y, lElbow.x),
+    toTuple(lWrist.y, lWrist.x),
+    ctx,
+    color
+  );
 
   //left arm bottom
   if (lElbow.score > minConfidence && lWrist.score > minConfidence) {
@@ -87,8 +99,15 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
   }
 
   //angle between rightShoulder and rightElbow
-  calcAngle(toTuple(lShoulder.y, lShoulder.x),toTuple(rShoulder.y, rShoulder.x),toTuple(rShoulder.y, rShoulder.x),toTuple(rElbow.y, rElbow.x), ctx, "red")
-  
+  calcAngle(
+    toTuple(lShoulder.y, lShoulder.x),
+    toTuple(rShoulder.y, rShoulder.x),
+    toTuple(rShoulder.y, rShoulder.x),
+    toTuple(rElbow.y, rElbow.x),
+    ctx,
+    "red"
+  );
+
   //right arm top
   if (rShoulder.score > minConfidence && rElbow.score > minConfidence) {
     drawSegment(
@@ -101,8 +120,14 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
   }
 
   //angle between rElbow and rWrist
-  calcAngle(toTuple(rShoulder.y, rShoulder.x),toTuple(rElbow.y, rElbow.x),toTuple(rElbow.y, rElbow.x),toTuple(rWrist.y, rWrist.x), ctx, color)
- 
+  calcAngle(
+    toTuple(rShoulder.y, rShoulder.x),
+    toTuple(rElbow.y, rElbow.x),
+    toTuple(rElbow.y, rElbow.x),
+    toTuple(rWrist.y, rWrist.x),
+    ctx,
+    color
+  );
 
   //right arm bottom
   if (rElbow.score > minConfidence && rWrist.score > minConfidence) {
@@ -190,7 +215,6 @@ export function drawSkeleton(pose, minConfidence, ctx, scale = 1) {
  * Draw joints
  */
 export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
-  // console.log(pose[0].keypoints.length);
   for (let i = 5; i < pose[0].keypoints.length; i++) {
     const keypoint = pose[0].keypoints[i];
 
@@ -199,7 +223,7 @@ export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
     }
     let x = keypoint.x;
     let y = keypoint.y;
-    //  const { y, x } = keypoint.position;
+
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
 }
@@ -207,18 +231,16 @@ export function drawKeypoints(pose, minConfidence, ctx, scale = 1) {
 function calcAngle([ay, ax], [by, bx], [cy, cx], [dy, dx], ctx, color) {
   const slope1 = (ay - by) / (ax - bx);
   const slope2 = (cy - dy) / (cx - dx);
-  // console.log(slope1);
-  // console.log(slope2);
-  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
-  // console.log(angle* 180 / Math.PI);
-  
-const text = angle* 180 / Math.PI;
-ctx.beginPath();
-      ctx.fillText(text, bx, by);
-      ctx.stroke();
+
+  const angle = Math.atan((slope2 - slope1) / (1 + slope1 * slope2));
+  const text = (angle * 180) / Math.PI;
+
+  ctx.beginPath();
+  ctx.fillText(text, bx, by);
+  ctx.stroke();
 }
 
-export function interiorAngle(pose, setIntAngle){
+export function interiorAngle(pose, setIntAngle) {
   const lShoulder = pose[0].keypoints[5];
   const rShoulder = pose[0].keypoints[6];
   const rElbow = pose[0].keypoints[8];
@@ -229,21 +251,16 @@ export function interiorAngle(pose, setIntAngle){
   const bx = rShoulder.x;
   const dy = rElbow.y;
   const dx = rElbow.x;
-   
+
   const slope1 = (ay - by) / (ax - bx);
   const slope2 = (by - dy) / (bx - dx);
-  // console.log(slope1);
-  // console.log(slope2);
-  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
-  // console.log(angle* 180 / Math.PI);
-  
-const angleReturn = angle* 180 / Math.PI;
-setIntAngle(Math.abs(Math.round(angleReturn)));
 
+  const angle = Math.atan((slope2 - slope1) / (1 + slope1 * slope2));
+  const angleReturn = (angle * 180) / Math.PI;
+  setIntAngle(Math.abs(Math.round(angleReturn)));
 }
 
-export function exteriorAngle(pose, setExtAngle){
-
+export function exteriorAngle(pose, setExtAngle) {
   const rShoulder = pose[0].keypoints[6];
   const rElbow = pose[0].keypoints[8];
   const rWrist = pose[0].keypoints[10];
@@ -254,21 +271,16 @@ export function exteriorAngle(pose, setExtAngle){
   const bx = rElbow.x;
   const dy = rWrist.y;
   const dx = rWrist.x;
-   
+
   const slope1 = (ay - by) / (ax - bx);
   const slope2 = (by - dy) / (bx - dx);
-  // console.log(slope1);
-  // console.log(slope2);
-  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
-  // console.log(angle* 180 / Math.PI);
-  
-const angleReturn = angle* 180 / Math.PI;
-setExtAngle(Math.abs(Math.round(angleReturn)));
 
+  const angle = Math.atan((slope2 - slope1) / (1 + slope1 * slope2));
+  const angleReturn = (angle * 180) / Math.PI;
+  setExtAngle(Math.abs(Math.round(angleReturn)));
 }
 
-export function releaseAngle(pose, setRelAngle){
-
+export function releaseAngle(pose, setRelAngle) {
   const rShoulder = pose[0].keypoints[6];
   const rWrist = pose[0].keypoints[10];
 
@@ -276,18 +288,13 @@ export function releaseAngle(pose, setRelAngle){
   const ax = rShoulder.x;
   const by = rWrist.y;
   const bx = rWrist.x;
-
   const dy = rShoulder.y;
   const dx = rWrist.x;
-   
+
   const slope1 = (ay - by) / (ax - bx);
   const slope2 = (ay - dy) / (ax - dx);
-  // console.log(slope1);
-  // console.log(slope2);
-  const angle = Math.atan((slope2 - slope1)/(1 + (slope1 * slope2)));
-  // console.log(angle* 180 / Math.PI);
-  
-const angleReturn = angle* 180 / Math.PI;
-setRelAngle(Math.abs(Math.round(angleReturn)));
 
+  const angle = Math.atan((slope2 - slope1) / (1 + slope1 * slope2));
+  const angleReturn = (angle * 180) / Math.PI;
+  setRelAngle(Math.abs(Math.round(angleReturn)));
 }

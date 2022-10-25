@@ -9,21 +9,17 @@ import {
   drawSkeleton,
   exteriorAngle,
   interiorAngle,
-  releaseAngle
+  releaseAngle,
 } from "../utilities";
 import TopNav from "../components/TopNav";
 import "./LiveCamera.css";
-// import useWindowDimensions from "../components/useWindowDimensions";
-// import useScreenOrientation from 'react-hook-screen-orientation';
 import AngleTable from "../components/AngleTable";
 import ModalView from "../components/ModalView";
 import { Button, IconButton } from "@mui/material";
 import { firestore } from "../firebase/firestore";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
-
 import { isMobile } from "react-device-detect";
 import CameraswitchIcon from "@mui/icons-material/Cameraswitch";
-
 import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 
@@ -31,24 +27,19 @@ const LiveCamera = () => {
   let current = 2;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-
+  const email = useSelector(getEmail);
   const [intAngle, setIntAngle] = useState(0);
   const [extAngle, setExtAngle] = useState(0);
   const [relAngle, setRelAngle] = useState(0);
-  
-  const email = useSelector(getEmail);
-
-  // const { width, height } = useWindowDimensions();
   const [loadProgress, setLoadProgress] = useState(0);
   const [modalShow, setModalShow] = useState(false);
-
   const [isFlipped, setIsFlipped] = useState(false);
   const [contraints, setConstraints] = useState({
     facingMode: "user",
   });
 
   const runModels = async () => {
-    //create detecotr for pose detection
+    //create detector for pose detection
     const detectorConfig = {
       modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
     };
@@ -57,11 +48,9 @@ const LiveCamera = () => {
       detectorConfig
     );
     //load coco for object detection
-
     const model = await cocoSsd.load().finally(() => {
       setLoadProgress((current) => (current += 1));
     });
-
     setInterval(() => {
       identify(detector);
       detect(model);
@@ -74,7 +63,6 @@ const LiveCamera = () => {
       tf.getBackend();
     })();
     runModels();
-    // setCamera();
   }, []);
 
   useEffect(() => {
@@ -205,43 +193,36 @@ const LiveCamera = () => {
       <div>
         <TopNav current={current} />
       </div>
-      {/* {loadProgress === 2 ? <ModalView show={false}/>: <ModalView show={true}/>} */}
       <ModalView show={modalShow} />
       <div className="camCont">
         <Webcam
           ref={webcamRef}
           muted={true}
           style={{
-            // position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
             zIndex: 9,
-            // width: width,
-            // height: height,
           }}
           videoConstraints={contraints}
         />
         <canvas
           style={{
-            // position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
             zIndex: 10,
-            // width: width,
-            // height: height,
           }}
           ref={canvasRef}
         />
         {isMobile && (
           <div className="camFlip">
             <IconButton onClick={handleFlip} size="small">
-              <CameraswitchIcon fontSize="large"/>
+              <CameraswitchIcon fontSize="large" />
             </IconButton>
           </div>
         )}
@@ -252,7 +233,7 @@ const LiveCamera = () => {
             const angles = {
               intAngle,
               extAngle,
-              relAngle
+              relAngle,
             };
             handleCapture(angles);
           }}
@@ -262,7 +243,11 @@ const LiveCamera = () => {
         </Button>
       </div>
       <div className="angleCont">
-        <AngleTable intAngle={intAngle} extAngle={extAngle} relAngle={relAngle} />
+        <AngleTable
+          intAngle={intAngle}
+          extAngle={extAngle}
+          relAngle={relAngle}
+        />
       </div>
     </div>
   );
