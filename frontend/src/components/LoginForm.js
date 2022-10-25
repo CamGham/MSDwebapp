@@ -1,10 +1,9 @@
 import { Button, TextField } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import "./LoginForm.css";
-
 import { useDispatch } from "react-redux";
 import { changeEmail } from "../redux/user/userSlice";
 
@@ -24,7 +23,6 @@ const LoginForm = (props) => {
     }),
     onSubmit: (values) => {
       //perform login
-
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredentials) => {
           const user = userCredentials.user;
@@ -33,7 +31,6 @@ const LoginForm = (props) => {
         })
         .catch((error) => {
           alert("Invalid login" + error);
-
         });
     },
   });

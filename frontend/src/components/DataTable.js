@@ -1,71 +1,44 @@
-import React, {useState} from 'react'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
-
-
+import React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const DataTable = (props) => {
-const {
-  data,
-  setShowModal,
-  show
-} = props;
-
-
-// console.log(data);
-
-    //   const rows = [
-    //     createData('Frozen yoghurt', 159, 6.0),
-    //     createData('Ice cream sandwich', 237, 9.0),
-    //     createData('Eclair', 262, 16.0),
-    //     createData('Cupcake', 305, 3.7),
-    //     createData('Gingerbread', 356, 16.0),
-    //   ];
-
-    //   const rows = data.map((row) =>{
-    //     createData(row.date, row.armInt, row.armExt);
-    //   })
-
-    // const rows2 = data;
-
+  const { data, setShowModal, show } = props;
 
   return (
     <div>
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date </TableCell>
-            <TableCell align="right">Release Angle°</TableCell>
-            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow
-              key={row.date}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.date.toDate().toDateString() + ", " +  row.date.toDate().toLocaleTimeString()}
-              </TableCell>
-              <TableCell align="right">{row.relAngle}</TableCell>
-              {/* <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell> */}
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Date </TableCell>
+              <TableCell align="right">Release Angle°</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow
+                key={row.date}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.date.toDate().toDateString() +
+                    ", " +
+                    row.date.toDate().toLocaleTimeString()}
+                </TableCell>
+                <TableCell align="right">{row.relAngle}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
-  )
-}
+  );
+};
 
-export default DataTable
+export default DataTable;

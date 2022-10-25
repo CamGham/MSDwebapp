@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
+import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 
 const DGrid = (props) => {
   const { data, setSelectedRow } = props;
-
-  // console.log(data);
 
   // define table columns
   const columns = [
@@ -23,14 +13,6 @@ const DGrid = (props) => {
     { field: "armExt", headerName: "Arm Ext Angle°", flex: 1 },
     { field: "ovrRate", headerName: "Overall Rating", flex: 1 },
   ];
-
-  const calcOvr = (props) => {
-    // let p1 = props.relAngle/48;
-    // let p2 = props.armExt/15;
-    console.log(props);
-
-    return 8;
-  };
 
   const rows = data.map((row) => ({
     id: row.date,
@@ -64,7 +46,6 @@ const DGrid = (props) => {
             columns={columns}
             autoHeight={true}
             disableColumnMenu={true}
-            // density={'compact'}
             pageSize={8}
             onSelectionModelChange={(ids) => {
               const selectedIDs = new Set(ids);
@@ -72,11 +53,9 @@ const DGrid = (props) => {
                 selectedIDs.has(row.id)
               );
               setSelectedRow(selectedRows);
-              // console.log(selectedRows[0])
             }}
             rowsPerPageOptions={[8, 10, 20]}
             getCellClassName={(params) => {
-              // console.log(params.field)
               if (params.field === "relAngle") {
                 if (params.value >= 44 && params.value <= 52) {
                   return "great";

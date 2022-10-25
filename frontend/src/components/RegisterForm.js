@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 import "./LoginForm.css";
-
 import { useDispatch } from "react-redux";
 import { changeEmail } from "../redux/user/userSlice";
 
@@ -57,9 +56,8 @@ const RegisterForm = (props) => {
     }),
     onSubmit: async (values) => {
       //perform login
-
       if (values.passwordreg !== values.confpassword) {
-        alert("Passwords do not match")
+        alert("Passwords do not match");
       } else {
         if ((await getUsers(values)) === false) {
           createUserWithEmailAndPassword(auth, values.email, values.passwordreg)
@@ -76,14 +74,6 @@ const RegisterForm = (props) => {
       }
     },
   });
-
-  //   useEffect(()=>{
-  //     const unsubscribe  = auth.onAuthStateChanged((user)=>{
-  //         if(user){
-  //             navigate
-  //         }
-  //     })
-  //   })
 
   return (
     <div>
