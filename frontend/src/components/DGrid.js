@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
 const DGrid = (props) => {
   const { data, setSelectedRow } = props;
@@ -19,9 +20,17 @@ const DGrid = (props) => {
     { field: "id", headerName: "ID", hide: true },
     { field: "date", headerName: "Date", flex: 2 },
     { field: "relAngle", headerName: "Release Angle°", flex: 1 },
-    { field: "armInt", headerName: "Arm Int Angle°", flex: 1 },
     { field: "armExt", headerName: "Arm Ext Angle°", flex: 1 },
+    { field: "ovrRate", headerName: "Overall Rating", flex: 1 },
   ];
+
+  const calcOvr = (props) => {
+    // let p1 = props.relAngle/48;
+    // let p2 = props.armExt/15;
+    console.log(props);
+
+    return 8;
+  };
 
   const rows = data.map((row) => ({
     id: row.date,
@@ -30,87 +39,66 @@ const DGrid = (props) => {
       ", " +
       row.date.toDate().toLocaleTimeString(),
     relAngle: row.relAngle,
-    armInt: row.armInt,
     armExt: row.armExt,
+    ovrRate: 100 - Math.abs(1 - (row.relAngle / 48 + row.armExt / 15) / 2) * 10,
   }));
 
-  //   const rows = [
-  //     createData('Frozen yoghurt', 159, 6.0),
-  //     createData('Ice cream sandwich', 237, 9.0),
-  //     createData('Eclair', 262, 16.0),
-  //     createData('Cupcake', 305, 3.7),
-  //     createData('Gingerbread', 356, 16.0),
-  //   ];
-
-  //   const rows = data.map((row) =>{
-  //     createData(row.date, row.armInt, row.armExt);
-  //   })
-
-  // const rows2 = data;
-
-  //     useEffect(()=>{
-  // console.log("HERE?" + show);
-  //     },[show])
-
-  //     const handleClick = () =>{
-  //       setShowModal(true)
-  //     }
-
   return (
-    // <div>
-    // <TableContainer component={Paper}>
-    //   <Table sx={{ minWidth: 650 }} aria-label="simple table">
-    //     <TableHead>
-    //       <TableRow>
-    //         <TableCell>Date </TableCell>
-    //         <TableCell align="right">Arm Int Angle °</TableCell>
-    //         <TableCell align="right">Arm Ext Angle °</TableCell>
-    //         <TableCell align="right">Analysis</TableCell>
-    //         {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-    //         <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
-    //       </TableRow>
-    //     </TableHead>
-    //     <TableBody>
-    //       {data.map((row) => (
-    //         <TableRow
-    //           key={row.date}
-    //           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-    //         >
-    //           <TableCell component="th" scope="row">
-    //             {row.date.toDate().toDateString() + ", " +  row.date.toDate().toLocaleTimeString()}
-    //           </TableCell>
-    //           <TableCell align="right">{row.armInt}</TableCell>
-    //           <TableCell align="right">{row.armExt}</TableCell>
-    //           <TableCell align='right'>
-    //             <Button onClick={handleClick}>
-    //               View Details
-    //             </Button>
-    //           </TableCell>
-    //           {/* <TableCell align="right">{row.carbs}</TableCell>
-    //           <TableCell align="right">{row.protein}</TableCell> */}
-    //         </TableRow>
-    //       ))}
-    //     </TableBody>
-    //   </Table>
-    // </TableContainer>
-    // </div>
     <div style={{ display: "flex", height: "100%", width: "100%" }}>
       <div style={{ flexGrow: 1 }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          autoHeight={true}
-          disableColumnMenu={true}
-          // density={'compact'}
-          pageSize={8}
-          onSelectionModelChange={(ids) => {
-            const selectedIDs = new Set(ids);
-            const selectedRows = rows.filter((row) => selectedIDs.has(row.id));
-            setSelectedRow(selectedRows);
-            // console.log(selectedRows[0])
+        <Box
+          sx={{
+            "& .great": {
+              backgroundColor: "rgba(157, 255, 118, 0.49)",
+            },
+            "& .ok": {
+              backgroundColor: "#eeaa44",
+            },
+            "& .bad": {
+              backgroundColor: "#eb4034",
+            },
           }}
-          rowsPerPageOptions={[8, 10, 20]}
-        />
+        >
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            autoHeight={true}
+            disableColumnMenu={true}
+            // density={'compact'}
+            pageSize={8}
+            onSelectionModelChange={(ids) => {
+              const selectedIDs = new Set(ids);
+              const selectedRows = rows.filter((row) =>
+                selectedIDs.has(row.id)
+              );
+              setSelectedRow(selectedRows);
+              // console.log(selectedRows[0])
+            }}
+            rowsPerPageOptions={[8, 10, 20]}
+            getCellClassName={(params) => {
+              // console.log(params.field)
+              if (params.field === "relAngle") {
+                if (params.value >= 44 && params.value <= 52) {
+                  return "great";
+                } else if (params.value >= 34 && params.value <= 62) {
+                  return "ok";
+                } else {
+                  return "bad";
+                }
+              }
+
+              if (params.field === "armExt") {
+                if (params.value <= 30) {
+                  return "great";
+                } else if (params.value <= 40) {
+                  return "ok";
+                } else {
+                  return "bad";
+                }
+              }
+            }}
+          />
+        </Box>
       </div>
     </div>
   );
