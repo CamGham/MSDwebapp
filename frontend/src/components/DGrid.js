@@ -22,7 +22,7 @@ const DGrid = (props) => {
       row.date.toDate().toLocaleTimeString(),
     relAngle: row.relAngle,
     armExt: row.armExt,
-    ovrRate: 100 - Math.abs(1 - (row.relAngle / 48 + row.armExt / 15) / 2) * 10,
+    ovrRate: Math.round(100 - Math.abs(1 - (row.relAngle / 48 + row.armExt / 15) / 2) * 10),
   }));
 
   return (
