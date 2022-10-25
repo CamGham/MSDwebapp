@@ -4,7 +4,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         email: 'undefined',
-        
     },
     reducers:{
         changeEmail: (state, action) =>{

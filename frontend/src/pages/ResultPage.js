@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import TopNav from "../components/TopNav";
 import DGrid from "../components/DGrid";
 import { firestore } from "../firebase/firestore";
-
 import { getEmail } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
@@ -14,69 +13,58 @@ const ResultPage = () => {
   const email = useSelector(getEmail);
   const [angleData, setAngleData] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
   const [selectedRow, setSelectedRow] = useState([]);
 
   const getData = async () => {
     try {
-      // let exists = false;
-
       const dataQuery = query(
         collection(firestore, "shots"),
-        where("email", "==", email), orderBy("date", "desc")
+        where("email", "==", email),
+        orderBy("date", "desc")
       );
       const querySnapshot = await getDocs(dataQuery);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
         let data = doc.data();
-        // setAngleData(doc.data());
         setAngleData((prev) => [...prev, data]);
       });
-
-      // angleData.sort((a, b) => a.date.seconds - b.date.seconds);
-
-      // const docRef = doc(firestore, "users", values.email);
-      // const querySnapShot = await getDoc(docRef);
-
-      // if (querySnapShot.exists()) {
-      //   exists = true;
-      // }
-      // return exists;
     } catch (e) {
       console.log(e);
     }
   };
 
-  
   useEffect(() => {
     (async () => {
       await getData();
     })();
   }, []);
 
-
-
-  const analyse = (e) =>{
+  const analyse = (e) => {
     e.preventDefault();
     setShowModal(true);
-  }
+  };
 
   return (
     <div className="resultsCont">
-      {/* setShowModal={setShowModal} show={showModal} */}
-      <AnalysisView data={selectedRow} setShowModal={setShowModal} visible={showModal}/>
+      <AnalysisView
+        data={selectedRow}
+        setShowModal={setShowModal}
+        visible={showModal}
+      />
       <TopNav current={current} />
-      <DGrid data={angleData} setSelectedRow={setSelectedRow}/>
+      <DGrid data={angleData} setSelectedRow={setSelectedRow} />
       {angleData.length > 0 && (
-          <div className="buttonContainer">
-            <div className="analyse">
-              <Button className="analyseButton" onClick={analyse} variant="outlined">
-                Analyse
-              </Button>
-            </div>
+        <div className="buttonContainer">
+          <div className="analyse">
+            <Button
+              className="analyseButton"
+              onClick={analyse}
+              variant="outlined"
+            >
+              Analyse
+            </Button>
           </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

@@ -41,9 +41,10 @@ const AnalysisView = (props) => {
         >
           {data[0] && (
             <div className="dataView">
-              <h2>Date: {data[0].date}</h2>
-              <h2>Shooting Arm Internal Angle: {data[0].armInt}</h2>
-              <h2>Shooting Arm External Angle: {data[0].armExt}</h2>
+              <h3>Date: {data[0].date}</h3>
+              <h3 color="red">Angle of Release: {data[0].relAngle}</h3>
+              <h3>Shooting Arm Internal Angle: {data[0].armInt}</h3>
+              <h3>Shooting Arm External Angle: {data[0].armExt}</h3>
             </div>
           )}
         </Box>

@@ -5,11 +5,14 @@ import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, getDoc, doc } from "firebase/firestore";
 import "./LoginForm.css";
+import { useDispatch } from "react-redux";
+import { changeEmail } from "../redux/user/userSlice";
 
 const RegisterForm = (props) => {
   const auth = props.auth;
   const navigate = props.navigate;
   const firestore = props.firestore;
+  const dispatch = useDispatch();
 
   const getUsers = async (values) => {
     try {
@@ -42,38 +45,35 @@ const RegisterForm = (props) => {
     initialValues: {
       name: "",
       email: "",
-      password: "",
+      passwordreg: "",
       confpassword: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Required"),
       email: Yup.string().required("Required"),
-      password: Yup.string().required("Required"),
+      passwordreg: Yup.string().required("Required"),
       confpassword: Yup.string().required("Required"),
     }),
     onSubmit: async (values) => {
       //perform login
-      if ((await getUsers(values)) === false) {
-        createUserWithEmailAndPassword(auth, values.email, values.password)
-          .then((userCredentials) => {
-            const user = userCredentials.user;
-          })
-          .catch((error) => {
-            alert("Error with creation " + error);
-          });
-        addUser(values);
-        navigate("/home");
+      if (values.passwordreg !== values.confpassword) {
+        alert("Passwords do not match");
+      } else {
+        if ((await getUsers(values)) === false) {
+          createUserWithEmailAndPassword(auth, values.email, values.passwordreg)
+            .then((userCredentials) => {
+              const user = userCredentials.user;
+              dispatch(changeEmail(user.email));
+            })
+            .catch((error) => {
+              alert("Error with creation " + error);
+            });
+          addUser(values);
+          navigate("/home");
+        }
       }
     },
   });
-
-  //   useEffect(()=>{
-  //     const unsubscribe  = auth.onAuthStateChanged((user)=>{
-  //         if(user){
-  //             navigate
-  //         }
-  //     })
-  //   })
 
   return (
     <div>
@@ -101,13 +101,13 @@ const RegisterForm = (props) => {
           </div>
           <div className="compCont">
             <TextField
-              id="passwordReg"
+              id="passwordreg"
               variant="outlined"
               type="password"
               label="Password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.password}
+              value={formik.values.passwordreg}
             />
           </div>
           <div className="compCont">
