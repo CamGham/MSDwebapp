@@ -53,6 +53,6 @@ test("nav to results", async () => {
   user.click(resultsNav);
 
   expect(screen.getAllByText(/date/i)).toHaveLength(2);
-  expect(screen.getAllByText(/arm int angle °/i)).toHaveLength(2);
-  expect(screen.getAllByText(/arm ext angle °/i)).toHaveLength(2);
+  expect(screen.getAllByText(/release angle°/i)).toHaveLength(2);
+  expect(screen.getAllByText(/arm ext angle°/i)).toHaveLength(1);
 });
