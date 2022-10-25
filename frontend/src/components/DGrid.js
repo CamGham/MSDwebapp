@@ -10,6 +10,7 @@ const DGrid = (props) => {
     { field: "id", headerName: "ID", hide: true },
     { field: "date", headerName: "Date", flex: 2 },
     { field: "relAngle", headerName: "Release Angle°", flex: 1 },
+    { field: "armInt", headerName: "Arm Int Angle°", hide: true },
     { field: "armExt", headerName: "Arm Ext Angle°", flex: 1 },
     { field: "ovrRate", headerName: "Overall Rating", flex: 1 },
   ];
@@ -21,6 +22,7 @@ const DGrid = (props) => {
       ", " +
       row.date.toDate().toLocaleTimeString(),
     relAngle: row.relAngle,
+    armInt: row.armInt,
     armExt: row.armExt,
     ovrRate: Math.round(100 - Math.abs(1 - (row.relAngle / 48 + row.armExt / 15) / 2) * 10),
   }));
