@@ -7,6 +7,8 @@ MSDwebapp is my React app project aimed at helping players develop a consistant 
 This web app can be run either on your computer or mobile at [https://msdshooter.herokuapp.com ](https://msdshooter.herokuapp.com ).
 Users will be able to create an account allowing for a history of statistical results to be kept which allows for a visual representation of their progression.
 
+*Note: if you are planning to run the web app on your mobile ensure your connection is secure eg. using https. Otherwiese the camera will not work, therefore analysis cannot take place
+
 What has been developed:
 * Creation of accounts
 * Live object tracking
@@ -46,7 +48,6 @@ If you want to build the project rathan than accessing the hosted version follow
     ```sh
    npm start
    ```
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
