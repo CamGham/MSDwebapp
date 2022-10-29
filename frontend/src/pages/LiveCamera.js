@@ -38,6 +38,8 @@ const LiveCamera = () => {
     facingMode: "user",
   });
 
+  const width = window.innerWidth;
+
   const runModels = async () => {
     //create detector for pose detection
     const detectorConfig = {
@@ -60,12 +62,14 @@ const LiveCamera = () => {
   useEffect(() => {
     (async () => {
       await tf.ready();
-      tf.getBackend();
+      console.log(tf.getBackend());
     })();
     runModels();
   }, []);
 
   useEffect(() => {
+    console.log(loadProgress)
+    console.log(width)
     if (loadProgress >= 1) {
       setModalShow(false);
     } else {
