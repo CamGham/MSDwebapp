@@ -60,7 +60,6 @@ const LiveCamera = () => {
   useEffect(() => {
     (async () => {
       await tf.ready();
-      tf.getBackend();
     })();
     runModels();
   }, []);
