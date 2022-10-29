@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 ## MSDwebapp Shooter
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="images/img2.jpg" width=300>
 
 MSDwebapp is my React app project aimed at helping players develop a consistant jumpshot. Utilizing tensorflow's posenet to identify body positioning, an analysis of a basketball players form can take place, providing the ability to give the user statistical results in order to help improve their jumpshot form thus scoring potential.
 
@@ -54,15 +54,15 @@ If you want to build the project rathan than accessing the hosted version follow
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+<img src="images/img1.jpg" width=300>
+<img src="images/img2.jpg" width=300>
+<img src="images/img3.jpg" width=300>
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-[product-screenshot]: images/screenshot.png
+[shooter-screenshot]: images/img2.jpg
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
